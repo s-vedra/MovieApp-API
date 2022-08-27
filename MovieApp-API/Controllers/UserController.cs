@@ -26,5 +26,11 @@ namespace MovieApp_API.Controllers
             //implement exceptions
             return Ok(_userService.GetUsers());
         }
+        [HttpPost("AddMovie")]
+        public IActionResult AddFavoriteMovie([FromBody] AddFavoriteMovie list)
+        {
+            _userService.AddNewMovie(list);
+            return Ok();
+        }
     }
 }

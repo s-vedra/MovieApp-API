@@ -10,6 +10,6 @@ namespace MovieApp.DomainModels
         public string Username { get; set; }
         public string Password { get; set; }
         public string FavoriteGenre { get; set; }
-        public virtual ICollection<MovieDto> MoviesList { get; set; }
+        public virtual ICollection<FavoriteMoviesDto> MoviesList { get; set; }
     }
 }

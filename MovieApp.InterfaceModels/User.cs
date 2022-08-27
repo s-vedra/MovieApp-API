@@ -14,6 +14,6 @@ namespace MovieApp.InterfaceModels
         public string Username { get; set; }
         public string Password { get; set; }
         public string FavoriteGenre { get; set; }
-        public List<Movie> MoviesList { get; set; }
+        public List<FavoriteMovies> MoviesList { get; set; }
     }
 }

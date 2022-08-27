@@ -21,7 +21,20 @@ namespace MovieApp.Services.Mappers
                 FavoriteGenre = source.FavoriteGenre,
                 Password = source.Password,
                 Username = source.Username,
-                MoviesList = source.MoviesList.Select(x => MappingEntities.Mapper<MovieDto, Movie>(x)).ToList()
+                MoviesList = source.MoviesList.Select(x => x.ToReqModel()).ToList()
+            };
+        }
+        public static UserDto ToReqModel(this User source)
+        {
+            return new UserDto()
+            {
+                Id = source.Id,
+                FirstName = source.FirstName,
+                LastName = source.LastName,
+                FavoriteGenre = source.FavoriteGenre,
+                Password = source.Password,
+                Username = source.Username,
+                MoviesList = source.MoviesList.Select(x => x.ToReqModel()).ToList()
             };
         }
     }

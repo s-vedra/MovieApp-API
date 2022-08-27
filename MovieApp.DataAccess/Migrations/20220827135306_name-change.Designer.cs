@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieApp.DataAccess;
 
@@ -11,9 +12,10 @@ using MovieApp.DataAccess;
 namespace MovieApp.DataAccess.Migrations
 {
     [DbContext(typeof(MovieAppDbContext))]
-    partial class MovieAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220827135306_name-change")]
+    partial class namechange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

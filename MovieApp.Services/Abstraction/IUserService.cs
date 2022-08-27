@@ -12,5 +12,7 @@ namespace MovieApp.Services.Abstraction
         void RegisterUser(RegisterUser user);
         void Authenticate(LoginUser user);
         List<User> GetUsers();
+        void AddNewMovie(AddFavoriteMovie list);
+        User GetById(int id);
     }
 }

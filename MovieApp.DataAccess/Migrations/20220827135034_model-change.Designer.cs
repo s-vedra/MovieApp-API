@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieApp.DataAccess;
 
@@ -11,9 +12,10 @@ using MovieApp.DataAccess;
 namespace MovieApp.DataAccess.Migrations
 {
     [DbContext(typeof(MovieAppDbContext))]
-    partial class MovieAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220827135034_model-change")]
+    partial class modelchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace MovieApp.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("MovieDtoId")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserDtoId")
@@ -84,7 +86,7 @@ namespace MovieApp.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieDtoId");
+                    b.HasIndex("MovieId");
 
                     b.HasIndex("UserDtoId");
 
@@ -139,7 +141,7 @@ namespace MovieApp.DataAccess.Migrations
                 {
                     b.HasOne("MovieApp.DomainModel.MovieDto", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieDtoId")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

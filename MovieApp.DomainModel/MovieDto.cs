@@ -9,8 +9,6 @@ namespace MovieApp.DomainModel
         public string Genre { get; set; }
         public DateTime Year { get; set; }
         public string Description { get; set; }
-        public int UserId { get; set; }
-        public UserDto User { get; set; }
 
     }
 }

@@ -25,12 +25,12 @@ namespace MovieApp.DataAccess.Implementation
 
         public IEnumerable<UserDto> GetAll()
         {
-           return _dbContext.Users.Include(x => x.MoviesList);
+           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto);
         }
 
         public UserDto GetByID(int id)
         {
-            return _dbContext.Users.Include(x => x.MoviesList).SingleOrDefault(x => x.Id == id);
+            return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).SingleOrDefault(x => x.Id == id);
         }
 
         public void Update(UserDto entity)
