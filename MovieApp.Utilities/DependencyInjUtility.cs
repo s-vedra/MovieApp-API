@@ -21,6 +21,7 @@ namespace MovieApp.Utilities
             service.AddTransient<IMovieService, MovieService>();
             service.AddTransient<IRepository<UserDto>, UserRepository>();
             service.AddTransient<IUserService, UserService>();
+            service.AddTransient<IMovieRepository, MovieRepository>();
             return service;
         }
     }

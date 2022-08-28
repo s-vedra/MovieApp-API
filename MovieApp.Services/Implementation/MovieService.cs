@@ -10,31 +10,33 @@ namespace MovieApp.Services.Implementation
     public class MovieService : IMovieService
     {
         private readonly IRepository<MovieDto> _movieRepository;
-        public MovieService(IRepository<MovieDto> movieRepository)
+        private readonly IMovieRepository _movieFilterRepository;
+        public MovieService(IRepository<MovieDto> movieRepository, IMovieRepository movieFilterRepository)
         {
             _movieRepository = movieRepository;
+            _movieFilterRepository = movieFilterRepository;
         }
 
         public void AddMovie(AddMovie movie)
         {
-            if (!string.IsNullOrEmpty(movie.Title) 
+            if (!string.IsNullOrEmpty(movie.Title)
                 && !string.IsNullOrEmpty(movie.Genre))
             {
-               _movieRepository.Add(MappingEntities.Mapper<AddMovie, MovieDto>(movie));
+                _movieRepository.Add(MappingEntities.Mapper<AddMovie, MovieDto>(movie));
             }
             else
             {
                 throw new MovieException();
             }
-          
+
         }
 
         public List<Movie> GetByGenre(string genre)
         {
-            var movies = GetMovies();
-            if (movies.Any(x => x.Genre.ToLower().Contains(genre.ToLower())))
+            var movies = _movieFilterRepository.GetByGenre(genre);
+            if (movies.Count() != 0)
             {
-                return movies.Where(x => x.Genre.ToLower().Contains(genre.ToLower())).ToList();
+                return movies.Select(x => MappingEntities.Mapper<MovieDto, Movie>(x)).ToList();
             }
             else
             {
@@ -53,7 +55,7 @@ namespace MovieApp.Services.Implementation
             {
                 throw new MovieException(id);
             }
-            
+
         }
 
         public List<Movie> GetMovies()

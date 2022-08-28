@@ -3,7 +3,7 @@ using MovieApp.DomainModel;
 
 namespace MovieApp.DataAccess.Implementation
 {
-    public class MovieRepository : IRepository<MovieDto>
+    public class MovieRepository : IRepository<MovieDto>, IMovieRepository
     {
         private readonly MovieAppDbContext _dbContext;
         public MovieRepository(MovieAppDbContext dbContext)
@@ -12,7 +12,6 @@ namespace MovieApp.DataAccess.Implementation
         }
         public void Add(MovieDto entity)
         {
-            //entity.Id = ++MovieStaticDb.Counter;
             _dbContext.Movies.Add(entity);
             _dbContext.SaveChanges();
         }
@@ -26,6 +25,11 @@ namespace MovieApp.DataAccess.Implementation
         public IEnumerable<MovieDto> GetAll()
         {
             return _dbContext.Movies;
+        }
+
+        public IEnumerable<MovieDto> GetByGenre(string genre)
+        {  
+           return GetAll().Where(x => x.Genre.ToLower().Contains(genre.ToLower())); 
         }
 
         public MovieDto GetByID(int id)

@@ -4,11 +4,6 @@ using MovieApp.DomainModels;
 using MovieApp.InterfaceModels;
 using MovieApp.Services.Abstraction;
 using MovieApp.Services.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieApp.Services.Implementation
 {
@@ -24,7 +19,7 @@ namespace MovieApp.Services.Implementation
 
         public void AddNewMovie(AddFavoriteMovie list)
         {
-          UserDto user = _userRepository.GetByID(list.UserId);
+            UserDto user = _userRepository.GetByID(list.UserId);
             FavoriteMoviesDto movie = new()
             {
                 MovieDto = _movieRepository.GetByID(list.MovieId),
@@ -46,19 +41,19 @@ namespace MovieApp.Services.Implementation
 
         public List<User> GetUsers()
         {
-           return _userRepository.GetAll().Select(x => x.ToReqModel()).ToList();
+            return _userRepository.GetAll().Select(x => x.ToReqModel()).ToList();
         }
 
         public void RegisterUser(RegisterUser user)
         {
-          UserDto userDto =  new UserDto()
-                             {
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
-                                Username = user.Username,
-                                Password = user.Password, //need to hash
-                                FavoriteGenre = user.FavoriteGenre
-                             };
+            UserDto userDto = new UserDto()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.Username,
+                Password = user.Password, //need to hash
+                FavoriteGenre = user.FavoriteGenre
+            };
             _userRepository.Add(userDto);
         }
 
