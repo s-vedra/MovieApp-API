@@ -22,19 +22,24 @@ namespace MovieApp.DataAccess.Implementation
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<MovieDto> GetAll()
+        public IDictionary<string, MovieDto> GetAll()
         {
-            return _dbContext.Movies;
+            return _dbContext.Movies.ToDictionary(x => x.Id.ToString());
         }
 
         public IEnumerable<MovieDto> GetByGenre(string genre)
         {  
-           return GetAll().Where(x => x.Genre.ToLower().Contains(genre.ToLower())); 
+           return GetAll().Values.Where(x => x.Genre.ToLower().Contains(genre.ToLower())); 
         }
 
         public MovieDto GetByID(int id)
         {
-            return _dbContext.Movies.SingleOrDefault(x => x.Id == id);
+            return GetAll().SingleOrDefault(x => x.Key == id.ToString()).Value;
+        }
+
+        public MovieDto GetByName(string name)
+        {
+            return GetAll().SingleOrDefault(x => x.Value.Title.ToLower().Contains(name.ToLower())).Value;
         }
 
         public void Update(MovieDto entity)

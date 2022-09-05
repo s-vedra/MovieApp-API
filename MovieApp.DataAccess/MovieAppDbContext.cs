@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieApp.DomainModel;
 using MovieApp.DomainModels;
+using MovieApp.HelperMethods;
 
 namespace MovieApp.DataAccess
 {
@@ -28,7 +29,7 @@ namespace MovieApp.DataAccess
                         FirstName = "Bob",
                         LastName = "Bobsky",
                         Username = "bobBobsky123",
-                        Password = "BobPassword", // need to hash
+                        Password = "BobPassword".Hash(),
                         FavoriteGenre = "Action", 
                     }
                 );

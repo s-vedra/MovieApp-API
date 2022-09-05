@@ -11,7 +11,7 @@ namespace MovieApp.DataAccess.Repository
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);
-        IEnumerable<T> GetAll();
+        IDictionary<string, T> GetAll();
         T GetByID(int id);
     }
 }

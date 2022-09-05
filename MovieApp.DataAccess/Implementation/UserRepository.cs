@@ -4,7 +4,7 @@ using MovieApp.DomainModels;
 
 namespace MovieApp.DataAccess.Implementation
 {
-    public class UserRepository : IRepository<UserDto>
+    public class UserRepository : IRepository<UserDto>, IUserRepository
     {
         private readonly MovieAppDbContext _dbContext;
         public UserRepository(MovieAppDbContext dbContext)
@@ -23,14 +23,19 @@ namespace MovieApp.DataAccess.Implementation
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<UserDto> GetAll()
+        public IDictionary<string,UserDto> GetAll()
         {
-           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto);
+           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).ToDictionary(x => x.Username);
         }
 
         public UserDto GetByID(int id)
         {
-            return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).SingleOrDefault(x => x.Id == id);
+            return GetAll().Values.SingleOrDefault(x => x.Id == id);
+        }
+
+        public UserDto GetUser(string username)
+        {
+            return GetAll().Values.SingleOrDefault(x => x.Username == username);
         }
 
         public void Update(UserDto entity)

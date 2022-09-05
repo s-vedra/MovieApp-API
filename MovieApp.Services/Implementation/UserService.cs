@@ -1,6 +1,7 @@
 ﻿using MovieApp.DataAccess.Repository;
-using MovieApp.DomainModel;
 using MovieApp.DomainModels;
+using MovieApp.Exceptions;
+using MovieApp.HelperMethods;
 using MovieApp.InterfaceModels;
 using MovieApp.Services.Abstraction;
 using MovieApp.Services.Mappers;
@@ -10,51 +11,82 @@ namespace MovieApp.Services.Implementation
     public class UserService : IUserService
     {
         private readonly IRepository<UserDto> _userRepository;
-        private readonly IRepository<MovieDto> _movieRepository;
-        public UserService(IRepository<UserDto> userRepository, IRepository<MovieDto> movieRepository)
+        private readonly IMovieRepository _movieFilterRepository;
+        private readonly IUserRepository _userFilterRepository;
+        private readonly IGenerateToken _token;
+        public UserService(IRepository<UserDto> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository)
         {
             _userRepository = userRepository;
-            _movieRepository = movieRepository;
+            _userFilterRepository = userFilterRepository;
+            _movieFilterRepository = movieFilterRepository;
+            _token = token;
         }
 
-        public void AddNewMovie(AddFavoriteMovie list)
+        public void AddNewMovie(string movieName, string username)
         {
-            UserDto user = _userRepository.GetByID(list.UserId);
-            FavoriteMoviesDto movie = new()
+            if (!string.IsNullOrEmpty(movieName))
             {
-                MovieDto = _movieRepository.GetByID(list.MovieId),
-                MovieDtoId = list.MovieId
-            };
-            user.MoviesList.Add(movie);
-            _userRepository.Update(user);
+                UserDto user = _userFilterRepository.GetUser(username);
+                FavoriteMoviesDto movie = new()
+                {
+                    MovieDto = _movieFilterRepository.GetByName(movieName)
+                };
+                user.MoviesList.Add(movie);
+                _userRepository.Update(user);
+            }
+            else
+            {
+                throw new MovieException("Movie is required");
+            }
+
         }
 
-        public void Authenticate(LoginUser user)
+        public string Authenticate(LoginUser user)
         {
-            throw new NotImplementedException();
-        }
-
-        public User GetById(int id)
-        {
-            return _userRepository.GetAll().Select(x => x.ToReqModel()).SingleOrDefault(x => x.Id == id);
+            UserDto userDto = _userFilterRepository.GetUser(user.Username);
+            var password = user.Password.Hash();
+            if (userDto != null && password == userDto.Password)
+            {
+                return _token.Token(userDto.Id, userDto.Username);
+            }
+            else
+            {
+                throw new UserException("No user found");
+            }
         }
 
         public List<User> GetUsers()
         {
-            return _userRepository.GetAll().Select(x => x.ToReqModel()).ToList();
+            var users = _userRepository.GetAll().Select(x => x.Value.ToReqModel()).ToList();
+            if (users.Count != 0)
+            {
+                return users;
+            }
+            else
+            {
+                throw new UserException("No users found");
+            }
         }
 
         public void RegisterUser(RegisterUser user)
         {
-            UserDto userDto = new UserDto()
+            if (GetUsers().Any(x => x.Username == user.Username))
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Username = user.Username,
-                Password = user.Password, //need to hash
-                FavoriteGenre = user.FavoriteGenre
-            };
-            _userRepository.Add(userDto);
+                throw new UserException("Username taken");
+            }
+            else
+            {
+                UserDto userDto = new UserDto()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.Username,
+                    Password = user.Password.Hash(),
+                    FavoriteGenre = user.FavoriteGenre
+                };
+                _userRepository.Add(userDto);
+            }
+
         }
 
     }

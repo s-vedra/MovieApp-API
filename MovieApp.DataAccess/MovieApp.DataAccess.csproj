@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieApp.DomainModel\MovieApp.DomainModels.csproj" />
+    <ProjectReference Include="..\MovieApp.HelperMethods\MovieApp.HelperMethods.csproj" />
   </ItemGroup>
 
 </Project>

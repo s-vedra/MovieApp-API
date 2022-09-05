@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieApp.InterfaceModels;
 using MovieApp.Services.Abstraction;
+using Serilog;
+using System.Security.Claims;
 
 namespace MovieApp_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -14,23 +17,74 @@ namespace MovieApp_API.Controllers
         {
             _userService = userService;
         }
+
+        [AllowAnonymous]
         [HttpPost("Register")]
         public IActionResult RegisterUser([FromBody] RegisterUser user)
         {
-            _userService.RegisterUser(user);
-            return Ok("User added");
+            try
+            {
+                Log.Information($"{user.FirstName} has been registered");
+                _userService.RegisterUser(user);
+                return Ok("User added");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"User entered {user.Username} which already exists");
+                return BadRequest(ex.Message);
+            }
+
         }
+
+        [AllowAnonymous]
+        [HttpPost("Login")]
+        public IActionResult Authenticate([FromBody] LoginUser user)
+        {
+            try
+            {
+                Log.Information($"{user.Username} has logged in");
+                return Ok(_userService.Authenticate(user));
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"User with the username {user.Username} wasn't found");
+                return BadRequest(ex.Message);
+            }
+
+        }
+
         [HttpGet("GetUsers")]
         public IActionResult GetAllUsers()
         {
-            //implement exceptions
-            return Ok(_userService.GetUsers());
+            try
+            {
+                Log.Information($"Returned all users");
+                return Ok(_userService.GetUsers());
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"No users in the DB");
+                return BadRequest(ex.Message);
+            }
+
         }
+
         [HttpPost("AddMovie")]
-        public IActionResult AddFavoriteMovie([FromBody] AddFavoriteMovie list)
+        public IActionResult AddFavoriteMovie([FromBody] string movieName)
         {
-            _userService.AddNewMovie(list);
-            return Ok();
+            try
+            {
+                var user = User.FindFirst(ClaimTypes.Name).Value;
+                Log.Information($"{user} has added a new movie in his list");
+                _userService.AddNewMovie(movieName, user);
+                return Ok("Movie added");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"{movieName} was not provided");
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }
