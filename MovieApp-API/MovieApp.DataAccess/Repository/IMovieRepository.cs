@@ -1,4 +1,5 @@
 ﻿using MovieApp.DomainModel;
+using MovieApp.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace MovieApp.DataAccess.Repository
     {
         IEnumerable<MovieDto> GetByGenre(string genre);
         MovieDto GetByName(string name);
+        FavoriteMoviesDto GetFavMovie(int id);
     }
 }

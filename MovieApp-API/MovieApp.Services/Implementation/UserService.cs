@@ -1,4 +1,5 @@
 ﻿using MovieApp.DataAccess.Repository;
+using MovieApp.DomainModel;
 using MovieApp.DomainModels;
 using MovieApp.Exceptions;
 using MovieApp.HelperMethods;
@@ -14,31 +15,34 @@ namespace MovieApp.Services.Implementation
         private readonly IMovieRepository _movieFilterRepository;
         private readonly IUserRepository _userFilterRepository;
         private readonly IGenerateToken _token;
-        public UserService(IRepository<UserDto> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository)
+        private readonly IRepository<MovieDto> _movieRepository;
+        public UserService(IRepository<UserDto> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository, IRepository<MovieDto> movieRepository)
         {
             _userRepository = userRepository;
             _userFilterRepository = userFilterRepository;
             _movieFilterRepository = movieFilterRepository;
             _token = token;
+            _movieRepository = movieRepository;
         }
 
-        public void AddNewMovie(string movieName, string username)
+        public void AddNewMovie(int id, string username)
         {
-            if (!string.IsNullOrEmpty(movieName))
-            {
-                UserDto user = _userFilterRepository.GetUser(username);
-                FavoriteMoviesDto movie = new()
-                {
-                    MovieDto = _movieFilterRepository.GetByName(movieName)
-                };
-                user.MoviesList.Add(movie);
-                _userRepository.Update(user);
-            }
-            else
-            {
-                throw new MovieException("Movie is required");
-            }
 
+                UserDto user = _userFilterRepository.GetUser(username);
+                MovieDto movieModel = _movieRepository.GetByID(id);
+                if (movieModel != null)
+                {
+                    FavoriteMoviesDto movie = new()
+                    {
+                        MovieDto = movieModel
+                    };
+                    user.MoviesList.Add(movie);
+                    _userRepository.Update(user);
+                }
+                else
+                {
+                    throw new MovieException("No movie found");
+                }
         }
 
         public string Authenticate(LoginUser user)
@@ -89,5 +93,15 @@ namespace MovieApp.Services.Implementation
 
         }
 
+        public void RemoveMovie(int id, string username)
+        {
+                UserDto user = _userFilterRepository.GetUser(username);
+                FavoriteMoviesDto movieModel = _movieFilterRepository.GetFavMovie(id);
+                if (movieModel != null)
+                {
+                    user.MoviesList.Remove(movieModel);
+                    _userRepository.Update(user);
+                }
+        }
     }
 }

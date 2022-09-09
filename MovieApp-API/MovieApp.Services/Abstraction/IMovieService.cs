@@ -13,5 +13,6 @@ namespace MovieApp.Services.Abstraction
         Movie GetById(int id);
         List<Movie> GetByGenre(string genre);
         void AddMovie(AddMovie movie);
+        void DeleteMovie(int id);
     }
 }

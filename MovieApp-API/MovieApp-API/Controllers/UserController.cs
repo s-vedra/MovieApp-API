@@ -69,22 +69,38 @@ namespace MovieApp_API.Controllers
 
         }
 
-        [HttpPost("AddMovie")]
-        public IActionResult AddFavoriteMovie([FromBody] string movieName)
+        [HttpPost("AddMovie/{id}")]
+        public IActionResult AddFavoriteMovie(int id)
         {
             try
             {
                 var user = User.FindFirst(ClaimTypes.Name).Value;
                 Log.Information($"{user} has added a new movie in his list");
-                _userService.AddNewMovie(movieName, user);
+                _userService.AddNewMovie(id, user);
                 return Ok("Movie added");
             }
             catch (Exception ex)
             {
-                Log.Error($"{movieName} was not provided");
+                Log.Error(ex.Message);
                 return BadRequest(ex.Message);
             }
 
+        }
+        [HttpDelete("DeleteFavMovie/{id}")]
+        public IActionResult RemoveMovie([FromRoute] int id)
+        {
+            try
+            {
+                var user = User.FindFirst(ClaimTypes.Name).Value;
+                Log.Information($"{user} has removed a movie from his list");
+                _userService.RemoveMovie(id, user);
+                return Ok("Movie removed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

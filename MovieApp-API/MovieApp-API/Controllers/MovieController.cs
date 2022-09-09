@@ -78,5 +78,22 @@ namespace MovieApp_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("DeleteMovie/{id}")]
+        public IActionResult DeleteMovie([FromRoute] int id)
+        {
+            try
+            {
+                Log.Information($"A movie has been deleted");
+                _movieService.DeleteMovie(id);
+                return Ok("Movie deleted");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Something went wrong while removing the movie");
+                return BadRequest(ex.Message);
+            }
+           
+        }
     }
 }

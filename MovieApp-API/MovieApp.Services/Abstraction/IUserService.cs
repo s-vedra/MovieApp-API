@@ -7,6 +7,7 @@ namespace MovieApp.Services.Abstraction
         void RegisterUser(RegisterUser user);
         string Authenticate(LoginUser user);
         List<User> GetUsers();
-        void AddNewMovie(string movie, string username);
+        void AddNewMovie(int id, string username);
+        void RemoveMovie(int id, string username);
     }
 }

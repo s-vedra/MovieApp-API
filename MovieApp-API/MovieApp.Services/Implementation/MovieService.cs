@@ -34,6 +34,20 @@ namespace MovieApp.Services.Implementation
 
         }
 
+        public void DeleteMovie(int id)
+        {
+            var movie = _movieRepository.GetByID(id);
+            if (movie != null)
+            {
+                _movieRepository.Delete(movie);
+            }
+            else
+            {
+                throw new MovieException("No movie found");
+            }
+            
+        }
+
         public List<Movie> GetByGenre(string genre)
         {
             var movies = _movieFilterRepository.GetByGenre(genre);

@@ -1,5 +1,7 @@
-﻿using MovieApp.DataAccess.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieApp.DataAccess.Repository;
 using MovieApp.DomainModel;
+using MovieApp.DomainModels;
 
 namespace MovieApp.DataAccess.Implementation
 {
@@ -40,6 +42,11 @@ namespace MovieApp.DataAccess.Implementation
         public MovieDto GetByName(string name)
         {
             return GetAll().SingleOrDefault(x => x.Value.Title.ToLower().Contains(name.ToLower())).Value;
+        }
+
+        public FavoriteMoviesDto GetFavMovie(int id)
+        {
+            return _dbContext.MovieList.SingleOrDefault(x => x.Id == id);
         }
 
         public void Update(MovieDto entity)
