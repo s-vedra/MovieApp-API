@@ -26,7 +26,7 @@ namespace MovieApp.DataAccess.Implementation
 
         public IDictionary<string, MovieDto> GetAll()
         {
-            return _dbContext.Movies.ToDictionary(x => x.Id.ToString());
+            return _dbContext.Movies.ToDictionary(x => x.Id.ToString(), x=> x);
         }
 
         public IEnumerable<MovieDto> GetByGenre(string genre)

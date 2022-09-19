@@ -25,7 +25,7 @@ namespace MovieApp.DataAccess.Implementation
 
         public IDictionary<string,UserDto> GetAll()
         {
-           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).ToDictionary(x => x.Username);
+           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).ToDictionary(x => x.Username, x=> x);
         }
 
         public UserDto GetByID(int id)
