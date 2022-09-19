@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelUsers;
 using MovieApp.Services.Abstraction;
 using Serilog;
 using System.Security.Claims;
@@ -52,7 +52,22 @@ namespace MovieApp_API.Controllers
             }
 
         }
-
+        [AllowAnonymous]
+        [HttpPut("ForgotPassword")]
+        public IActionResult ForgotPassword(UpdateUser user)
+        {
+            try
+            {
+                Log.Information($"{user.Username} changed his password");
+                _userService.ForgotPassword(user);
+                return Ok("Password changed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Something went wrong while changing password");
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("GetUsers")]
         public IActionResult GetAllUsers()
         {

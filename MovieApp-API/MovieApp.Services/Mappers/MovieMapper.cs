@@ -1,5 +1,5 @@
 ﻿using MovieApp.DomainModel;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelMovies;
 using System;
 using System.Collections.Generic;
 using System.Linq;

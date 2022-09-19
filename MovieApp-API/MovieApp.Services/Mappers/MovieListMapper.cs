@@ -1,6 +1,6 @@
 ﻿using MovieApp.DomainModel;
 using MovieApp.DomainModels;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelUsers;
 
 namespace MovieApp.Services.Mappers
 {

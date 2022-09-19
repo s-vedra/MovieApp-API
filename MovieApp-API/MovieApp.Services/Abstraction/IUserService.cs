@@ -1,4 +1,4 @@
-﻿using MovieApp.InterfaceModels;
+﻿using MovieApp.InterfaceModels.InterfaceModelUsers;
 
 namespace MovieApp.Services.Abstraction
 {
@@ -9,5 +9,6 @@ namespace MovieApp.Services.Abstraction
         List<User> GetUsers();
         void AddNewMovie(int id, string username);
         void RemoveMovie(int id, string username);
+        void ForgotPassword(UpdateUser user);
     }
 }

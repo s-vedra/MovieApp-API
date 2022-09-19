@@ -2,7 +2,7 @@
 using MovieApp.DataAccess.Repository;
 using MovieApp.DomainModel;
 using MovieApp.Exceptions;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelMovies;
 using MovieApp.Services.Abstraction;
 using MovieApp.Services.Mappers;
 
@@ -85,6 +85,28 @@ namespace MovieApp.Services.Implementation
             else
             {
                 throw new MovieException("No movies found");
+            }
+            
+        }
+
+        public void UpdateMovie(UpdateMovie movieModel)
+        {
+            var filteredMovie = _movieRepository.GetByID(movieModel.Id);
+            if (filteredMovie != null)
+            {
+                MovieDto movie = new()
+                {
+                    Id = movieModel.Id,
+                    Title = movieModel.Title,
+                    Genre = movieModel.Genre,
+                    Description = movieModel.Description,
+                    Year = movieModel.Year
+                };
+                _movieRepository.Update(movie);
+            }
+            else
+            {
+                throw new MovieException("No movie found");
             }
             
         }

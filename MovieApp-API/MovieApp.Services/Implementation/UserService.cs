@@ -3,7 +3,7 @@ using MovieApp.DomainModel;
 using MovieApp.DomainModels;
 using MovieApp.Exceptions;
 using MovieApp.HelperMethods;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelUsers;
 using MovieApp.Services.Abstraction;
 using MovieApp.Services.Mappers;
 
@@ -16,13 +16,15 @@ namespace MovieApp.Services.Implementation
         private readonly IUserRepository _userFilterRepository;
         private readonly IGenerateToken _token;
         private readonly IRepository<MovieDto> _movieRepository;
-        public UserService(IRepository<UserDto> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository, IRepository<MovieDto> movieRepository)
+        private readonly IHasher _hasher;
+        public UserService(IRepository<UserDto> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository, IRepository<MovieDto> movieRepository, IHasher hasher)
         {
             _userRepository = userRepository;
             _userFilterRepository = userFilterRepository;
             _movieFilterRepository = movieFilterRepository;
             _token = token;
             _movieRepository = movieRepository;
+            _hasher = hasher;
         }
 
         public void AddNewMovie(int id, string username)
@@ -48,7 +50,7 @@ namespace MovieApp.Services.Implementation
         public string Authenticate(LoginUser user)
         {
             UserDto userDto = _userFilterRepository.GetUser(user.Username);
-            var password = user.Password.Hash();
+            var password = _hasher.Hash(user.Password);
             if (userDto != null && password == userDto.Password)
             {
                 return _token.Token(userDto.Id, userDto.Username);
@@ -57,6 +59,38 @@ namespace MovieApp.Services.Implementation
             {
                 throw new UserException("No user found");
             }
+        }
+
+        public void ForgotPassword(UpdateUser user)
+        {
+            if (user.NewPassword == user.ConfirmPassword)
+            {
+                UserDto userModel = _userFilterRepository.GetUser(user.Username);
+                if (userModel != null)
+                {
+                    UserDto newUser = new()
+                    {
+                        Id = userModel.Id,
+                        FirstName = userModel.FirstName,
+                        LastName = userModel.LastName,
+                        FavoriteGenre = userModel.FavoriteGenre,
+                        Username = userModel.Username,
+                        Password = _hasher.Hash(user.NewPassword),
+                        MoviesList = userModel.MoviesList
+                    };
+                    _userRepository.Update(newUser);
+                }
+                else
+                {
+                    throw new UserException("User with that username doesn't exist");
+                }
+
+            }
+            else
+            {
+                throw new UserException("Passwords don't match");
+            }
+            
         }
 
         public List<User> GetUsers()
@@ -85,7 +119,7 @@ namespace MovieApp.Services.Implementation
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Username = user.Username,
-                    Password = user.Password.Hash(),
+                    Password = _hasher.Hash(user.Password),
                     FavoriteGenre = user.FavoriteGenre
                 };
                 _userRepository.Add(userDto);

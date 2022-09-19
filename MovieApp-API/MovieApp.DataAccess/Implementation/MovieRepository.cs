@@ -52,11 +52,8 @@ namespace MovieApp.DataAccess.Implementation
         public void Update(MovieDto entity)
         {
           MovieDto movie = GetByID(entity.Id);
-            if (movie != null)
-            {
-                _dbContext.Entry(movie).CurrentValues.SetValues(entity);
-                _dbContext.SaveChanges();
-            }
+          _dbContext.Entry(movie).CurrentValues.SetValues(entity);
+          _dbContext.SaveChanges();
         }
     }
 }

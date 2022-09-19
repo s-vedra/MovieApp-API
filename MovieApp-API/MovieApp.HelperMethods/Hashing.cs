@@ -3,9 +3,9 @@ using System.Text;
 
 namespace MovieApp.HelperMethods
 {
-    public static class Hashing
+    public class Hashing : IHasher
     {
-        public static string Hash(this string password)
+        public string Hash(string password)
         {
             var md5 = new MD5CryptoServiceProvider();
             var md5Data = md5.ComputeHash(Encoding.ASCII.GetBytes(password));

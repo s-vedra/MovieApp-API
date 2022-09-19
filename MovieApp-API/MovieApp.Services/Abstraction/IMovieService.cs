@@ -1,4 +1,4 @@
-﻿using MovieApp.InterfaceModels;
+﻿using MovieApp.InterfaceModels.InterfaceModelMovies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +14,6 @@ namespace MovieApp.Services.Abstraction
         List<Movie> GetByGenre(string genre);
         void AddMovie(AddMovie movie);
         void DeleteMovie(int id);
+        void UpdateMovie(UpdateMovie movie);
     }
 }

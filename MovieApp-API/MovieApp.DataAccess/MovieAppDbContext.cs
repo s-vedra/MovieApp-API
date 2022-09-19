@@ -7,9 +7,10 @@ namespace MovieApp.DataAccess
 {
     public class MovieAppDbContext : DbContext
     {
-        public MovieAppDbContext(DbContextOptions<MovieAppDbContext> options) : base(options)
+        private readonly IHasher _hasher;
+        public MovieAppDbContext(DbContextOptions<MovieAppDbContext> options, IHasher hasher) : base(options)
         {
-
+            _hasher = hasher;
         }
 
         public DbSet<MovieDto> Movies { get; set; }
@@ -29,7 +30,7 @@ namespace MovieApp.DataAccess
                         FirstName = "Bob",
                         LastName = "Bobsky",
                         Username = "bobBobsky123",
-                        Password = "BobPassword".Hash(),
+                        Password = _hasher.Hash("BobPassword"),
                         FavoriteGenre = "Action", 
                     }
                 );

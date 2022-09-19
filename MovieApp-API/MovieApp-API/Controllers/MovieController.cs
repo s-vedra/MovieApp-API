@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieApp.InterfaceModels;
+using MovieApp.InterfaceModels.InterfaceModelMovies;
 using MovieApp.Services.Abstraction;
 using Serilog;
 
@@ -94,6 +94,21 @@ namespace MovieApp_API.Controllers
                 return BadRequest(ex.Message);
             }
            
+        }
+        [HttpPut("UpdateMovie")]
+        public IActionResult UpdateMovie([FromBody] UpdateMovie movie)
+        {
+            try
+            {
+                Log.Information($"Movie with the title {movie.Title} has been updated");
+                _movieService.UpdateMovie(movie);
+                return Ok("Movie updated");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Something went wrong while updating the movie");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

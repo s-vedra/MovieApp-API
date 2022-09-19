@@ -28,6 +28,7 @@ namespace MovieApp.Utilities
             service.AddTransient<IUserService, UserService>();
             service.AddTransient<IMovieRepository, MovieRepository>();
             service.AddTransient<IUserRepository, UserRepository>();
+            service.AddTransient<IHasher, Hashing>();
             //helpers
             service.AddTransient<IGenerateToken, GenerateToken>();
             //mapper
