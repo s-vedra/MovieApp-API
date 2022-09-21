@@ -64,7 +64,7 @@ namespace MovieApp_API.Controllers
         }
 
         [HttpPost("AddNewMovie")]
-        public IActionResult AddMovie([FromBody] AddMovie movie)
+        public IActionResult AddMovie([FromBody] AddMovieDto movie)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace MovieApp_API.Controllers
            
         }
         [HttpPut("UpdateMovie")]
-        public IActionResult UpdateMovie([FromBody] UpdateMovie movie)
+        public IActionResult UpdateMovie([FromBody] UpdateMovieDto movie)
         {
             try
             {

@@ -14,7 +14,7 @@
     <ProjectReference Include="..\MovieApp.DataAccess\MovieApp.DataAccess.csproj" />
     <ProjectReference Include="..\MovieApp.HelperMethods\MovieApp.HelperMethods.csproj" />
     <ProjectReference Include="..\MovieApp.Helpers\MovieApp.Exceptions.csproj" />
-    <ProjectReference Include="..\MovieApp.InterfaceModels\MovieApp.InterfaceModels.csproj" />
+    <ProjectReference Include="..\MovieApp.InterfaceModels\MovieApp.DTO.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,9 +11,9 @@ namespace MovieApp.Services.Mappers
 {
     public static class UserMapper
     {
-        public static User ToReqModel(this UserDto source)
+        public static InterfaceModels.InterfaceModelUsers.UserDto ToReqModel(this DomainModels.User source)
         {
-            return new User()
+            return new InterfaceModels.InterfaceModelUsers.UserDto()
             {
                 Id = source.Id,
                 FirstName = source.FirstName,
@@ -24,9 +24,9 @@ namespace MovieApp.Services.Mappers
                 MoviesList = source.MoviesList.Select(x => x.ToReqModel()).ToList()
             };
         }
-        public static UserDto ToReqModel(this User source)
+        public static DomainModels.User ToReqModel(this InterfaceModels.InterfaceModelUsers.UserDto source)
         {
-            return new UserDto()
+            return new DomainModels.User()
             {
                 Id = source.Id,
                 FirstName = source.FirstName,

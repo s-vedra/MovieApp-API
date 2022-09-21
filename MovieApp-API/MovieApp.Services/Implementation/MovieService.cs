@@ -4,28 +4,27 @@ using MovieApp.DomainModel;
 using MovieApp.Exceptions;
 using MovieApp.InterfaceModels.InterfaceModelMovies;
 using MovieApp.Services.Abstraction;
-using MovieApp.Services.Mappers;
 
 namespace MovieApp.Services.Implementation
 {
     public class MovieService : IMovieService
     {
-        private readonly IRepository<MovieDto> _movieRepository;
+        private readonly IRepository<Movie> _movieRepository;
         private readonly IMovieRepository _movieFilterRepository;
         private readonly IMapper _mapper;
-        public MovieService(IRepository<MovieDto> movieRepository, IMovieRepository movieFilterRepository, IMapper mapper)
+        public MovieService(IRepository<Movie> movieRepository, IMovieRepository movieFilterRepository, IMapper mapper)
         {
             _movieRepository = movieRepository;
             _movieFilterRepository = movieFilterRepository;
             _mapper = mapper;
         }
 
-        public void AddMovie(AddMovie movie)
+        public void AddMovie(AddMovieDto movie)
         {
             if (!string.IsNullOrEmpty(movie.Title)
                 && !string.IsNullOrEmpty(movie.Genre))
             {
-                _movieRepository.Add(_mapper.Map<MovieDto>(movie));
+                _movieRepository.Add(_mapper.Map<Movie>(movie));
             }
             else
             {
@@ -45,15 +44,15 @@ namespace MovieApp.Services.Implementation
             {
                 throw new MovieException("No movie found");
             }
-            
+
         }
 
-        public List<Movie> GetByGenre(string genre)
+        public List<MovieDto> GetByGenre(string genre)
         {
             var movies = _movieFilterRepository.GetByGenre(genre);
             if (movies.Count() != 0)
             {
-                return movies.Select(x => _mapper.Map<Movie>(x)).ToList();
+                return movies.Select(x => _mapper.Map<MovieDto>(x)).ToList();
             }
             else
             {
@@ -61,12 +60,12 @@ namespace MovieApp.Services.Implementation
             }
         }
 
-        public Movie GetById(int id)
+        public MovieDto GetById(int id)
         {
-            Movie movie = _mapper.Map<Movie>(_movieRepository.GetByID(id));
+            Movie movie = _movieRepository.GetByID(id);
             if (movie != null)
             {
-                return _mapper.Map<Movie>(_movieRepository.GetByID(id));
+                return _mapper.Map<MovieDto>(_movieRepository.GetByID(id));
             }
             else
             {
@@ -75,9 +74,9 @@ namespace MovieApp.Services.Implementation
 
         }
 
-        public List<Movie> GetMovies()
+        public List<MovieDto> GetMovies()
         {
-            var movies  = _movieRepository.GetAll().Select(x => _mapper.Map<Movie>(x.Value)).ToList();
+            var movies = _movieRepository.GetAll().Select(x => _mapper.Map<MovieDto>(x.Value)).ToList();
             if (movies.Count != 0)
             {
                 return movies;
@@ -86,15 +85,15 @@ namespace MovieApp.Services.Implementation
             {
                 throw new MovieException("No movies found");
             }
-            
+
         }
 
-        public void UpdateMovie(UpdateMovie movieModel)
+        public void UpdateMovie(UpdateMovieDto movieModel)
         {
             var filteredMovie = _movieRepository.GetByID(movieModel.Id);
             if (filteredMovie != null)
             {
-                MovieDto movie = new()
+                Movie movie = new()
                 {
                     Id = movieModel.Id,
                     Title = movieModel.Title,
@@ -108,7 +107,7 @@ namespace MovieApp.Services.Implementation
             {
                 throw new MovieException("No movie found");
             }
-            
+
         }
     }
 }

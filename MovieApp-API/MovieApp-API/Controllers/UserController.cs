@@ -20,7 +20,7 @@ namespace MovieApp_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Register")]
-        public IActionResult RegisterUser([FromBody] RegisterUser user)
+        public IActionResult RegisterUser([FromBody] RegisterUserDto user)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace MovieApp_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Authenticate([FromBody] LoginUser user)
+        public IActionResult Authenticate([FromBody] LoginUserDto user)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace MovieApp_API.Controllers
         }
         [AllowAnonymous]
         [HttpPut("ForgotPassword")]
-        public IActionResult ForgotPassword(UpdateUser user)
+        public IActionResult ForgotPassword([FromBody] UpdateUserDto user)
         {
             try
             {

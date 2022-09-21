@@ -22,7 +22,7 @@ namespace MovieApp.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MovieApp.DomainModel.MovieDto", b =>
+            modelBuilder.Entity("MovieApp.DomainModel.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace MovieApp.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieApp.DomainModels.FavoriteMoviesDto", b =>
+            modelBuilder.Entity("MovieApp.DomainModels.FavoriteMovies", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,22 +76,22 @@ namespace MovieApp.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("MovieDtoId")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserDtoId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieDtoId");
+                    b.HasIndex("MovieId");
 
-                    b.HasIndex("UserDtoId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("MovieList", (string)null);
                 });
 
-            modelBuilder.Entity("MovieApp.DomainModels.UserDto", b =>
+            modelBuilder.Entity("MovieApp.DomainModels.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,22 +135,22 @@ namespace MovieApp.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieApp.DomainModels.FavoriteMoviesDto", b =>
+            modelBuilder.Entity("MovieApp.DomainModels.FavoriteMovies", b =>
                 {
-                    b.HasOne("MovieApp.DomainModel.MovieDto", "MovieDto")
+                    b.HasOne("MovieApp.DomainModel.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieDtoId")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieApp.DomainModels.UserDto", null)
+                    b.HasOne("MovieApp.DomainModels.User", null)
                         .WithMany("MoviesList")
-                        .HasForeignKey("UserDtoId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("MovieDto");
+                    b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("MovieApp.DomainModels.UserDto", b =>
+            modelBuilder.Entity("MovieApp.DomainModels.User", b =>
                 {
                     b.Navigation("MoviesList");
                 });

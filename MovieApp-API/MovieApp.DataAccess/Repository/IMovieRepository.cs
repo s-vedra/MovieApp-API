@@ -10,8 +10,8 @@ namespace MovieApp.DataAccess.Repository
 {
     public interface IMovieRepository
     {
-        IEnumerable<MovieDto> GetByGenre(string genre);
-        MovieDto GetByName(string name);
-        FavoriteMoviesDto GetFavMovie(int id);
+        IEnumerable<Movie> GetByGenre(string genre);
+        Movie GetByName(string name);
+        FavoriteMovies GetFavMovie(int id);
     }
 }

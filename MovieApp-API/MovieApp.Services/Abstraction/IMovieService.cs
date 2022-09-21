@@ -9,11 +9,11 @@ namespace MovieApp.Services.Abstraction
 {
     public interface IMovieService
     {
-        List<Movie> GetMovies();
-        Movie GetById(int id);
-        List<Movie> GetByGenre(string genre);
-        void AddMovie(AddMovie movie);
+        List<MovieDto> GetMovies();
+        MovieDto GetById(int id);
+        List<MovieDto> GetByGenre(string genre);
+        void AddMovie(AddMovieDto movie);
         void DeleteMovie(int id);
-        void UpdateMovie(UpdateMovie movie);
+        void UpdateMovie(UpdateMovieDto movie);
     }
 }

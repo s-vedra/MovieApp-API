@@ -10,9 +10,9 @@ namespace MovieApp.Services.Mappers
 {
     public static class MovieMapper
     {
-        public static Movie ToReqModel(this MovieDto movie)
+        public static MovieDto ToReqModel(this Movie movie)
         {
-            return new Movie()
+            return new MovieDto()
             {
                 Id = movie.Id,
                 Title = movie.Title,
@@ -21,9 +21,9 @@ namespace MovieApp.Services.Mappers
                 Genre = movie.Genre
             };
         }
-        public static MovieDto ToReqModel(this Movie movie)
+        public static Movie ToReqModel(this MovieDto movie)
         {
-            return new MovieDto()
+            return new Movie()
             {
                 Id = movie.Id,
                 Title = movie.Title,

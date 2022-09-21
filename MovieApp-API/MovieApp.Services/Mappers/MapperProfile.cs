@@ -12,16 +12,16 @@ namespace MovieApp.Services.Mappers
         {
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
-            CreateMap<UserDto, RegisterUser>();
-            CreateMap<RegisterUser, UserDto>();
-            CreateMap<UserDto, LoginUser>();
-            CreateMap<LoginUser, UserDto>();
-            CreateMap<MovieDto, Movie>();
+            CreateMap<User, RegisterUserDto>();
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<User, LoginUserDto>();
+            CreateMap<LoginUserDto, User>();
             CreateMap<Movie, MovieDto>();
-            CreateMap<FavoriteMovies, FavoriteMoviesDto>();
-            CreateMap<FavoriteMoviesDto, FavoriteMovies>();
-            CreateMap<AddMovie, MovieDto>();
-            CreateMap<MovieDto, AddMovie>();
+            CreateMap<MovieDto, Movie>();
+            CreateMap<FavoriteMovies, FavoriteMovies>();
+            CreateMap<FavoriteMovies, FavoriteMovies>();
+            CreateMap<AddMovieDto, Movie>();
+            CreateMap<Movie, AddMovieDto>();
         }
     }
 }

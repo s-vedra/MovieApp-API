@@ -13,18 +13,18 @@ namespace MovieApp.DataAccess
             _hasher = hasher;
         }
 
-        public DbSet<MovieDto> Movies { get; set; }
-        public DbSet<UserDto> Users { get; set; }
-        public DbSet<FavoriteMoviesDto> MovieList { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<FavoriteMovies> MovieList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<MovieDto>().ToTable("Movie");
-            builder.Entity<UserDto>().ToTable("User");
-            builder.Entity<FavoriteMoviesDto>().ToTable("MovieList");
-            builder.Entity<UserDto>().HasData
+            builder.Entity<Movie>().ToTable("Movie");
+            builder.Entity<User>().ToTable("User");
+            builder.Entity<FavoriteMovies>().ToTable("MovieList");
+            builder.Entity<User>().HasData
                 (
-                    new UserDto()
+                    new User()
                     {
                         Id = 1,
                         FirstName = "Bob",
@@ -34,9 +34,9 @@ namespace MovieApp.DataAccess
                         FavoriteGenre = "Action", 
                     }
                 );
-            builder.Entity<MovieDto>().HasData
+            builder.Entity<Movie>().HasData
                 (
-                    new MovieDto()
+                    new Movie()
                     {
                         Id = 1,
                         Title = "Avengers: Endgame",
@@ -45,7 +45,7 @@ namespace MovieApp.DataAccess
                         Description = "After Thanos, an intergalactic warlord, disintegrates half of the universe, " +
                 "the Avengers must reunite and assemble again to reinvigorate their trounced allies and restore balance."
                     },
-                    new MovieDto()
+                    new Movie()
                     {
                         Id = 2,
                         Title = "Spider-Man: No Way Home",

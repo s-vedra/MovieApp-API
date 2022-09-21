@@ -4,43 +4,43 @@ using MovieApp.DomainModels;
 
 namespace MovieApp.DataAccess.Implementation
 {
-    public class UserRepository : IRepository<UserDto>, IUserRepository
+    public class UserRepository : IRepository<User>, IUserRepository
     {
         private readonly MovieAppDbContext _dbContext;
         public UserRepository(MovieAppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public void Add(UserDto entity)
+        public void Add(User entity)
         {
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
         }
 
-        public void Delete(UserDto entity)
+        public void Delete(User entity)
         {
             _dbContext.Users.Remove(entity);
             _dbContext.SaveChanges();
         }
 
-        public IDictionary<string,UserDto> GetAll()
+        public IDictionary<string,User> GetAll()
         {
-           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.MovieDto).ToDictionary(x => x.Username, x=> x);
+           return _dbContext.Users.Include(x => x.MoviesList).ThenInclude(x => x.Movie).ToDictionary(x => x.Username, x=> x);
         }
 
-        public UserDto GetByID(int id)
+        public User GetByID(int id)
         {
             return GetAll().Values.SingleOrDefault(x => x.Id == id);
         }
 
-        public UserDto GetUser(string username)
+        public User GetUser(string username)
         {
             return GetAll().Values.SingleOrDefault(x => x.Username == username);
         }
 
-        public void Update(UserDto entity)
+        public void Update(User entity)
         {
-            UserDto movie = GetByID(entity.Id);
+            User movie = GetByID(entity.Id);
             _dbContext.Entry(movie).CurrentValues.SetValues(entity);
             _dbContext.SaveChanges();
         }

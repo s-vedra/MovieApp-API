@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.DataAccess", "Movi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Services", "MovieApp.Services\MovieApp.Services.csproj", "{5A24197E-3CAF-4B20-924D-56A2C5A5F92B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.InterfaceModels", "MovieApp.InterfaceModels\MovieApp.InterfaceModels.csproj", "{EAC56A56-030A-4C3E-984B-3F29676714F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.DTO", "MovieApp.InterfaceModels\MovieApp.DTO.csproj", "{EAC56A56-030A-4C3E-984B-3F29676714F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Utilities", "MovieApp.Utilities\MovieApp.Utilities.csproj", "{6E5E0416-7D91-41D3-80FF-B4D0465D59C0}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Config", "MovieApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Exceptions", "MovieApp.Helpers\MovieApp.Exceptions.csproj", "{C300166C-14FF-49A1-8A80-B25D015AE3ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApp.HelperMethods", "MovieApp.HelperMethods\MovieApp.HelperMethods.csproj", "{C44518F9-AC36-4B3B-950C-98CA60B7BF92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.HelperMethods", "MovieApp.HelperMethods\MovieApp.HelperMethods.csproj", "{C44518F9-AC36-4B3B-950C-98CA60B7BF92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

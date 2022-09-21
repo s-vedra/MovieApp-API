@@ -9,6 +9,6 @@ namespace MovieApp.DataAccess.Repository
 {
     public interface IUserRepository
     {
-        UserDto GetUser(string username);
+        User GetUser(string username);
     }
 }
