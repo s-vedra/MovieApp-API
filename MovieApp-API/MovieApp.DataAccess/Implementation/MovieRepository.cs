@@ -1,11 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MovieApp.DataAccess.Repository;
+﻿using MovieApp.DataAccess.Repository;
 using MovieApp.DomainModel;
 using MovieApp.DomainModels;
 
 namespace MovieApp.DataAccess.Implementation
 {
-    public class MovieRepository : IRepository<Movie>, IMovieRepository
+    public class MovieRepository : IMovieRepository
     {
         private readonly MovieAppDbContext _dbContext;
         public MovieRepository(MovieAppDbContext dbContext)
@@ -26,12 +25,12 @@ namespace MovieApp.DataAccess.Implementation
 
         public IDictionary<string, Movie> GetAll()
         {
-            return _dbContext.Movies.ToDictionary(x => x.Id.ToString(), x=> x);
+            return _dbContext.Movies.ToDictionary(x => x.Id.ToString(), x => x);
         }
 
         public IEnumerable<Movie> GetByGenre(string genre)
-        {  
-           return GetAll().Values.Where(x => x.Genre.ToLower().Contains(genre.ToLower())); 
+        {
+            return GetAll().Values.Where(x => x.Genre.ToLower().Contains(genre.ToLower()));
         }
 
         public Movie GetByID(int id)
@@ -51,9 +50,9 @@ namespace MovieApp.DataAccess.Implementation
 
         public void Update(Movie entity)
         {
-          Movie movie = GetByID(entity.Id);
-          _dbContext.Entry(movie).CurrentValues.SetValues(entity);
-          _dbContext.SaveChanges();
+            Movie movie = GetByID(entity.Id);
+            _dbContext.Entry(movie).CurrentValues.SetValues(entity);
+            _dbContext.SaveChanges();
         }
     }
 }

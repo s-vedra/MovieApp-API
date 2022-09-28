@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MovieApp.DataAccess.Repository
 {
-    public interface IMovieRepository
+    public interface IMovieRepository : IRepository<Movie>
     {
         IEnumerable<Movie> GetByGenre(string genre);
         Movie GetByName(string name);

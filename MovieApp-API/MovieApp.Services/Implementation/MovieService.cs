@@ -9,13 +9,12 @@ namespace MovieApp.Services.Implementation
 {
     public class MovieService : IMovieService
     {
-        private readonly IRepository<Movie> _movieRepository;
-        private readonly IMovieRepository _movieFilterRepository;
+        private readonly IMovieRepository _movieRepository;
         private readonly IMapper _mapper;
-        public MovieService(IRepository<Movie> movieRepository, IMovieRepository movieFilterRepository, IMapper mapper)
+        public MovieService(IMovieRepository movieRepository, IMapper mapper)
         {
+
             _movieRepository = movieRepository;
-            _movieFilterRepository = movieFilterRepository;
             _mapper = mapper;
         }
 
@@ -49,7 +48,7 @@ namespace MovieApp.Services.Implementation
 
         public List<MovieDto> GetByGenre(string genre)
         {
-            var movies = _movieFilterRepository.GetByGenre(genre);
+            var movies = _movieRepository.GetByGenre(genre);
             if (movies.Count() != 0)
             {
                 return movies.Select(x => _mapper.Map<MovieDto>(x)).ToList();

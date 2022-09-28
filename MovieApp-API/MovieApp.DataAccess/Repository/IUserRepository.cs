@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieApp.DataAccess.Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         User GetUser(string username);
     }

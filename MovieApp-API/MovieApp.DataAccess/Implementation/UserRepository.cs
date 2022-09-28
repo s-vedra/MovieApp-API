@@ -4,7 +4,7 @@ using MovieApp.DomainModels;
 
 namespace MovieApp.DataAccess.Implementation
 {
-    public class UserRepository : IRepository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly MovieAppDbContext _dbContext;
         public UserRepository(MovieAppDbContext dbContext)

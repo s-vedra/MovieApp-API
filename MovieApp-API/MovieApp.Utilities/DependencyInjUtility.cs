@@ -22,9 +22,7 @@ namespace MovieApp.Utilities
             options.UseSqlServer(connectionString)
             );
             //services
-            service.AddTransient<IRepository<Movie>, MovieRepository>();
             service.AddTransient<IMovieService, MovieService>();
-            service.AddTransient<IRepository<User>, UserRepository>();
             service.AddTransient<IUserService, UserService>();
             service.AddTransient<IMovieRepository, MovieRepository>();
             service.AddTransient<IUserRepository, UserRepository>();

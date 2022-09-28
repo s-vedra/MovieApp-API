@@ -11,26 +11,22 @@ namespace MovieApp.Services.Implementation
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
-        private readonly IMovieRepository _movieFilterRepository;
-        private readonly IUserRepository _userFilterRepository;
+        private readonly IMovieRepository _movieRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IGenerateToken _token;
-        private readonly IRepository<Movie> _movieRepository;
         private readonly IHasher _hasher;
-        public UserService(IRepository<User> userRepository, IUserRepository userFilterRepository, IGenerateToken token, IMovieRepository movieFilterRepository, IRepository<Movie> movieRepository, IHasher hasher)
+        public UserService(IUserRepository userRepository, IGenerateToken token, IMovieRepository movieRepository, IHasher hasher)
         {
             _userRepository = userRepository;
-            _userFilterRepository = userFilterRepository;
-            _movieFilterRepository = movieFilterRepository;
-            _token = token;
             _movieRepository = movieRepository;
+            _token = token;
             _hasher = hasher;
         }
 
         public void AddNewMovie(int id, string username)
         {
 
-            User user = _userFilterRepository.GetUser(username);
+            User user = _userRepository.GetUser(username);
             Movie movieModel = _movieRepository.GetByID(id);
             if (movieModel != null)
             {
@@ -49,7 +45,7 @@ namespace MovieApp.Services.Implementation
 
         public string Authenticate(LoginUserDto userDto)
         {
-            User user = _userFilterRepository.GetUser(userDto.Username);
+            User user = _userRepository.GetUser(userDto.Username);
             var password = _hasher.Hash(userDto.Password);
             if (user != null && password == user.Password)
             {
@@ -65,7 +61,7 @@ namespace MovieApp.Services.Implementation
         {
             if (user.NewPassword == user.ConfirmPassword)
             {
-                User userModel = _userFilterRepository.GetUser(user.Username);
+                User userModel = _userRepository.GetUser(user.Username);
                 if (userModel != null)
                 {
                     User newUser = new()
@@ -129,8 +125,8 @@ namespace MovieApp.Services.Implementation
 
         public void RemoveMovie(int id, string username)
         {
-            User user = _userFilterRepository.GetUser(username);
-            FavoriteMovies movieModel = _movieFilterRepository.GetFavMovie(id);
+            User user = _userRepository.GetUser(username);
+            FavoriteMovies movieModel = _movieRepository.GetFavMovie(id);
             if (movieModel != null)
             {
                 user.MoviesList.Remove(movieModel);
