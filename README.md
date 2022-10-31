@@ -10,7 +10,7 @@ API that keeps and manages your favorite movies. Currently the back-end is only 
   * Add a new movie
   * Edit the movie 
   * Delete the movie  
-  * Search by movies
+  * Search by genre or title
 
 * Users
   * Login
