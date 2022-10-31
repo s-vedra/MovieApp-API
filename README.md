@@ -1,37 +1,21 @@
-# MovieApp-API
+# MovieAPI
 
-## Part 1
+## Summary
 
-Create an API that keeps and manages your favorite movies. It should have the option to:
+API that keeps and manages your favorite movies. Currently the back-end is only available, the client part is in development. Authentication and authorization are implemented using JWT tokens. 
 
-* keep data in a fixed static class
-* create a new movie
-* get a movie by id
-* get all movies
-* get the movie by genre
+## Features
 
-A movie contains:
+* Movie 
+  * Add a new movie
+  * Edit the movie 
+  * Delete the movie  
+  * Search by movies
 
-* title
-* description
-* year
-* genre
+* Users
+  * Login
+  * Register
+  * Save a movie as your favorite movie
+  * Delete the movie from your favorite movie list
+  
 
-## Part 2
-
-Create an architecture and connect the API to a database where the data should be kept
-
-## Part 3
-
-Create an end-to-end implementation for Users. A User has:
-
-* Username
-* Password ( Hashed )
-* First Name
-* Last Name
-* Favorite Genre
-* MoviesList
-
-## Bonus
-
-Implement authentication/authorization with tokens
